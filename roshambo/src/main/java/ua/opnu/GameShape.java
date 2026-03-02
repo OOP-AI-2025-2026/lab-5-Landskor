@@ -1,9 +1,18 @@
 package ua.opnu;
 
-public class GameShape {
+public abstract class GameShape {
+    private String name;
+
+    public GameShape(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
-        return "Game shape";
+        return name;
     }
 }
