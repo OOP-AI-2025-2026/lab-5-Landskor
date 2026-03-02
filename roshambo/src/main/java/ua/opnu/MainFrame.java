@@ -37,27 +37,43 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private GameShape generateShape() {
-
-        // TODO: написати логіку методу
-
         // Метод повертає об'єкт ігрової фігури (камінь, ножиці чи папір)
         // випадковим чином
 
         int random = new Random().nextInt(3);
 
-        return new GameShape(); // TODO: змініть на об'єкт потрібної фігури
+        switch (random) {
+            case 0:
+                return new Rock();
+            case 1:
+                return new Scissors();
+            case 2:
+                return new Paper();
+            default:
+                return new Rock();
+        }
     }
 
     private int checkWinner(GameShape player, GameShape computer) {
-
         // Метод отримує клас фігури гравця і комп'ютера за допомогою оператора instanceof
         // Метод повертає 1 якщо переміг гравець
         // Метод повертає 0 якщо нічия (обидві фігури однакові)
         // Метод повертає -1 якщо переміг комп'ютер
 
-        // TODO: написати логіку методу
+        // Нічия
+        if (player.getClass().equals(computer.getClass())) {
+            return 0;
+        }
 
-        return 0;
+        // Перевіряємо, чи виграв комп'ютер
+        if ((computer instanceof Rock && player instanceof Scissors) ||
+                (computer instanceof Scissors && player instanceof Paper) ||
+                (computer instanceof Paper && player instanceof Rock)) {
+            return -1;
+        }
+
+        // Інакше виграв гравець
+        return 1;
     }
 
     @Override
@@ -65,17 +81,17 @@ public class MainFrame extends JFrame implements ActionListener {
         // Генерується ход комп'ютеру
         GameShape computerShape = generateShape();
 
-        GameShape playerShape = new GameShape();
+        GameShape playerShape = null;
         // Визначаємо, на яку кнопку натиснув гравець
         switch (e.getActionCommand()) {
             case "rock":
-                // присвоїти playerShape об'єкт відповідного класу
+                playerShape = new Rock();
                 break;
             case "paper":
-                // присвоїти playerShape об'єкт відповідного класу
+                playerShape = new Paper();
                 break;
             case "scissors":
-                // присвоїти playerShape об'єкт відповідного класу
+                playerShape = new Scissors();
                 break;
         }
 
@@ -97,5 +113,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
         // Вивести діалогове вікно з повідомленням
         JOptionPane.showMessageDialog(null, message);
+    }
+
+    public static void main(String[] args) {
+        new MainFrame("Камінь-Ножиці-Папір");
     }
 }
